@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
         weightBonds: 25,
-        profitBonds: 4,
+        profitBonds: 0,
         weightStocks: 25,
-        profitStocks: 23,
+        profitStocks: 0,
         weightEtf: 25,
-        profitEtf: 26,
+        profitEtf: 0,
         weightReits: 25,
-        profitReits: 13,
+        profitReits: 0,
         total:100,
-        totalRent:0
+        totalRent: 0
     };
 
 export const dataSlice = createSlice({
@@ -18,7 +18,7 @@ export const dataSlice = createSlice({
   initialState,
   reducers: {
         setWeightBonds: (state, action) => {
-        state.weightBonds = action.payload
+            state.weightBonds = action.payload 
         },
         setProfitBonds : (state, action) => {
             state.profitBonds = action.payload
@@ -47,6 +47,27 @@ export const dataSlice = createSlice({
         setTotalRent : (state, action) => {
             state.totalRent = (state.weightStocks * state.profitStocks + state.weightEtf * state.profitEtf + state.weightReits * state.profitReits + state.weightBonds * state.profitBonds) / 100;
         },
+        setLowRisk : (state, action) => {
+            state.weightBonds = 70 
+            state.weightStocks = 10
+            state.weightEtf = 10
+            state.weightReits = 10
+        },
+        setMediumRisk : (state, action) => {
+            state.weightBonds = 40 
+            state.weightStocks = 20
+            state.weightEtf = 20
+            state.weightReits = 20
+        },
+        setHighRisk : (state, action) => {
+            state.weightBonds = 25 
+            state.weightStocks = 25
+            state.weightEtf = 25
+            state.weightReits = 25
+        },
+        
+        
+        
     }
 });
 
@@ -61,6 +82,9 @@ export const {
     setProfitReits,
     setTotal,
     setTotalRent,
+    setLowRisk,
+    setMediumRisk,
+    setHighRisk
  } = dataSlice.actions;
 
 export const selectData = (state) => state.data;

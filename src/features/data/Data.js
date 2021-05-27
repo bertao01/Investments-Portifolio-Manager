@@ -12,20 +12,22 @@ import {
   setProfitReits,
   setTotal,
   setTotalRent,
+  setLowRisk,
+  setMediumRisk,
+  setHighRisk,
   selectData
 } from './dataSlice';
+import './Data.css'
 
 export default function Data() {
 
   const data = useSelector(selectData);
   const dispatch = useDispatch();
 
-  //-bullshit just to work
-
-  const edit = () => {}
-  const handlestandard = () => {}
-
-  //-bullshit just to work
+  function editValue() {
+    const newValue = Number(prompt(`Set new value for this field (%):`))
+    return newValue
+  }
 
   return (
 
@@ -39,35 +41,63 @@ export default function Data() {
         </tr>
         <tr>
           <th>Bonds</th>
-          <td>{data.weightBonds}%</td>
-          <td>{data.profitBonds}%</td>
-          <i onClick={() => edit("bonds")}>
-            <AiFillEdit />
-          </i>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setWeightBonds(editValue()))}
+          >
+            {data.weightBonds}%
+          </td>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setProfitBonds(editValue()))}
+          >
+            {data.profitBonds}%
+          </td>
         </tr>
         <tr>
           <th>Stocks</th>
-          <td>{data.weightStocks}%</td>
-          <td>{data.profitStocks}%</td>
-          <i onClick={() => edit("stocks")}>
-            <AiFillEdit />
-          </i>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setWeightStocks(editValue()))}
+          >
+            {data.weightStocks}%
+          </td>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setProfitStocks(editValue()))}
+          >
+            {data.profitStocks}%
+          </td>
         </tr>
         <tr>
           <th>ETF</th>
-          <td>{data.weightEtf}%</td>
-          <td>{data.profitEtf}%</td>
-          <i onClick={() => edit("etf")}>
-            <AiFillEdit />
-          </i>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setWeightEtf(editValue()))}
+          > 
+            {data.weightEtf}%
+          </td>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setProfitEtf(editValue()))}
+          >
+            {data.profitEtf}%
+          </td>
         </tr>
         <tr>
           <th>REITs</th>
-          <td>{data.weightReits}%</td>
-          <td>{data.profitReits}%</td>
-          <i onClick={() => edit("reits")}>
-            <AiFillEdit />
-          </i>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setWeightReits(editValue()))}
+          >
+            {data.weightReits}%
+          </td>
+          <td 
+            className="input__data"
+            onClick={() => dispatch(setProfitReits(editValue()))}
+          >
+            {data.profitReits}%
+          </td>
         </tr>
         <tr>
           <th>TOTAL</th>
@@ -79,9 +109,9 @@ export default function Data() {
 
     <div className="standards-container">
       <h3>Investing standards</h3>
-      <button onClick={() => handlestandard("low")}>Low risk</button>
-      <button onClick={() => handlestandard("medium")}>Medium risk</button>
-      <button onClick={() => handlestandard("high")}>High risk</button>
+      <button onClick={() => dispatch(setLowRisk())}>Low risk</button>
+      <button onClick={() => dispatch(setMediumRisk())}>Medium risk</button>
+      <button onClick={() => dispatch(setHighRisk())}>High risk</button>
     </div>
   </div>
   );
