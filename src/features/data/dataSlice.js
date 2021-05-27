@@ -1,54 +1,68 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './counterAPI';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: 0,
-  status: 'idle',
-};
+        weightBonds: 25,
+        profitBonds: 4,
+        weightStocks: 25,
+        profitStocks: 23,
+        weightEtf: 25,
+        profitEtf: 26,
+        weightReits: 25,
+        profitReits: 13,
+        total:100,
+        totalRent:0
+    };
 
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount) => {
-    const response = await fetchCount(amount);
-    return response.data;
-  }
-);
-
-export const counterSlice = createSlice({
-  name: 'counter',
+export const dataSlice = createSlice({
+  name: 'data',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(incrementAsync.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.value += action.payload;
-      });
-  },
+        setWeightBonds: (state, action) => {
+        state.weightBonds = action.payload
+        },
+        setProfitBonds : (state, action) => {
+            state.profitBonds = action.payload
+        },
+        setWeightStocks : (state, action) => {
+            state.weightStocks = action.payload
+        },
+        setProfitStocks : (state, action) => {
+            state.profitStocks = action.payload
+        },
+        setWeightEtf : (state, action) => {
+            state.weightEtf = action.payload
+        },
+        setProfitEtf : (state, action) => {
+            state.profitEtf = action.payload
+        },
+        setWeightReits : (state, action) => {
+            state.weightReits = action.payload
+        },
+        setProfitReits : (state, action) => {
+            state.profitReits = action.payload
+        },
+        setTotal : (state, action) => {
+            state.total = state.weightStocks + state.weightEtf + state.weightReits + state.weightBonds;
+        },
+        setTotalRent : (state, action) => {
+            state.totalRent = (state.weightStocks * state.profitStocks + state.weightEtf * state.profitEtf + state.weightReits * state.profitReits + state.weightBonds * state.profitBonds) / 100;
+        },
+    }
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { 
+    setWeightBonds,
+    setProfitBonds,
+    setWeightStocks,
+    setProfitStocks,
+    setWeightEtf,
+    setProfitEtf,
+    setWeightReits,
+    setProfitReits,
+    setTotal,
+    setTotalRent,
+ } = dataSlice.actions;
 
-export const selectCount = (state) => state.counter.value;
+export const selectData = (state) => state.data;
 
-export const incrementIfOdd = (amount) => (dispatch, getState) => {
-  const currentValue = selectCount(getState());
-  if (currentValue % 2 === 1) {
-    dispatch(incrementByAmount(amount));
-  }
-};
-
-export default counterSlice.reducer;
+export default dataSlice.reducer;

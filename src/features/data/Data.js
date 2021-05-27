@@ -1,18 +1,95 @@
 import React, { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setWeightBonds,
+  setProfitBonds,
+  setWeightStocks,
+  setProfitStocks,
+  setWeightEtf,
+  setProfitEtf,
+  setWeightReits,
+  setProfitReits,
+  setTotal,
+  setTotalRent,
+  selectData
+} from './dataSlice';
 
-export default function Data(props) {
-  const [data, setData] = useState({
-    weightBonds: 25,
-    profitBonds: 4,
-    weightStocks: 25,
-    profitStocks: 23,
-    weightEtf: 25,
-    profitEtf: 26,
-    weightReits: 25,
-    profitReits: 13,
-  });
+export default function Data() {
 
+  const data = useSelector(selectData);
+  const dispatch = useDispatch();
+
+  //-bullshit just to work
+
+  const edit = () => {}
+  const handlestandard = () => {}
+
+  //-bullshit just to work
+
+  return (
+
+  <div>
+    <div>
+      <table className="app">
+        <tr>
+          <th>Asset</th>
+          <th>Weight</th>
+          <th>Profit</th>
+        </tr>
+        <tr>
+          <th>Bonds</th>
+          <td>{data.weightBonds}%</td>
+          <td>{data.profitBonds}%</td>
+          <i onClick={() => edit("bonds")}>
+            <AiFillEdit />
+          </i>
+        </tr>
+        <tr>
+          <th>Stocks</th>
+          <td>{data.weightStocks}%</td>
+          <td>{data.profitStocks}%</td>
+          <i onClick={() => edit("stocks")}>
+            <AiFillEdit />
+          </i>
+        </tr>
+        <tr>
+          <th>ETF</th>
+          <td>{data.weightEtf}%</td>
+          <td>{data.profitEtf}%</td>
+          <i onClick={() => edit("etf")}>
+            <AiFillEdit />
+          </i>
+        </tr>
+        <tr>
+          <th>REITs</th>
+          <td>{data.weightReits}%</td>
+          <td>{data.profitReits}%</td>
+          <i onClick={() => edit("reits")}>
+            <AiFillEdit />
+          </i>
+        </tr>
+        <tr>
+          <th>TOTAL</th>
+          <td>{data.total}%</td>
+          <td>{data.totalRent}%</td>
+        </tr>
+      </table>
+    </div>
+
+    <div className="standards-container">
+      <h3>Investing standards</h3>
+      <button onClick={() => handlestandard("low")}>Low risk</button>
+      <button onClick={() => handlestandard("medium")}>Medium risk</button>
+      <button onClick={() => handlestandard("high")}>High risk</button>
+    </div>
+  </div>
+  );
+}
+
+
+
+/*
   const total =
     data.weightStocks + data.weightEtf + data.weightReits + data.weightBonds;
   const totalRent =
@@ -21,6 +98,7 @@ export default function Data(props) {
       data.weightReits * data.profitReits +
       data.weightBonds * data.profitBonds) /
     100;
+
 
   function handlestandard(standard) {
     switch (standard) {
@@ -95,63 +173,4 @@ export default function Data(props) {
         break;
     }
   }
-
-  return (
-
-  <div>
-    <div>
-      <table className="app">
-        <tr>
-          <th>Asset</th>
-          <th>Weight</th>
-          <th>Profit</th>
-        </tr>
-        <tr>
-          <th>Bonds</th>
-          <td>{data.weightBonds}%</td>
-          <td>{data.profitBonds}%</td>
-          <i onClick={() => edit("bonds")}>
-            <AiFillEdit />
-          </i>
-        </tr>
-        <tr>
-          <th>Stocks</th>
-          <td>{data.weightStocks}%</td>
-          <td>{data.profitStocks}%</td>
-          <i onClick={() => edit("stocks")}>
-            <AiFillEdit />
-          </i>
-        </tr>
-        <tr>
-          <th>ETF</th>
-          <td>{data.weightEtf}%</td>
-          <td>{data.profitEtf}%</td>
-          <i onClick={() => edit("etf")}>
-            <AiFillEdit />
-          </i>
-        </tr>
-        <tr>
-          <th>REITs</th>
-          <td>{data.weightReits}%</td>
-          <td>{data.profitReits}%</td>
-          <i onClick={() => edit("reits")}>
-            <AiFillEdit />
-          </i>
-        </tr>
-        <tr>
-          <th>TOTAL</th>
-          <td>{total}%</td>
-          <td>{totalRent}%</td>
-        </tr>
-      </table>
-    </div>
-
-    <div className="standards-container">
-      <h3>Investing standards</h3>
-      <button onClick={() => handlestandard("low")}>Low risk</button>
-      <button onClick={() => handlestandard("medium")}>Medium risk</button>
-      <button onClick={() => handlestandard("high")}>High risk</button>
-    </div>
-  </div>
-  );
-}
+*/
