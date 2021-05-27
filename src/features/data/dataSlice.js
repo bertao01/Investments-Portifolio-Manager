@@ -5,8 +5,8 @@ const initialState = {
         profitBonds: 0,
         weightStocks: 25,
         profitStocks: 0,
-        weightEtf: 25,
-        profitEtf: 0,
+        weightEtfs: 25,
+        profitEtfs: 0,
         weightReits: 25,
         profitReits: 0,
         total:100,
@@ -29,11 +29,11 @@ export const dataSlice = createSlice({
         setProfitStocks : (state, action) => {
             state.profitStocks = action.payload
         },
-        setWeightEtf : (state, action) => {
-            state.weightEtf = action.payload
+        setWeightEtfs : (state, action) => {
+            state.weightEtfs = action.payload
         },
-        setProfitEtf : (state, action) => {
-            state.profitEtf = action.payload
+        setProfitEtfs : (state, action) => {
+            state.profitEtfs = action.payload
         },
         setWeightReits : (state, action) => {
             state.weightReits = action.payload
@@ -42,26 +42,26 @@ export const dataSlice = createSlice({
             state.profitReits = action.payload
         },
         setTotal : (state, action) => {
-            state.total = state.weightStocks + state.weightEtf + state.weightReits + state.weightBonds;
+            state.total = state.weightStocks + state.weightEtfs + state.weightReits + +state.weightBonds;
 
-            state.totalRent = (state.weightStocks * state.profitStocks + state.weightEtf * state.profitEtf + state.weightReits * state.profitReits + state.weightBonds * state.profitBonds) / 100;
+            state.totalRent = (state.weightStocks * state.profitStocks + state.weightEtfs * state.profitEtfs + state.weightReits * state.profitReits + state.weightBonds * state.profitBonds) / 100;
         },
         setLowRisk : (state) => {
             state.weightBonds = 70 
             state.weightStocks = 10
-            state.weightEtf = 10
+            state.weightEtfs = 10
             state.weightReits = 10
         },
         setMediumRisk : (state) => {
             state.weightBonds = 40 
             state.weightStocks = 20
-            state.weightEtf = 20
+            state.weightEtfs = 20
             state.weightReits = 20
         },
         setHighRisk : (state) => {
             state.weightBonds = 25 
             state.weightStocks = 25
-            state.weightEtf = 25
+            state.weightEtfs = 25
             state.weightReits = 25
         },
         
@@ -75,8 +75,8 @@ export const {
     setProfitBonds,
     setWeightStocks,
     setProfitStocks,
-    setWeightEtf,
-    setProfitEtf,
+    setWeightEtfs,
+    setProfitEtfs,
     setWeightReits,
     setProfitReits,
     setTotal,

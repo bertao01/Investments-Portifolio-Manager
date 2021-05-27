@@ -5,8 +5,8 @@ import {
   setProfitBonds,
   setWeightStocks,
   setProfitStocks,
-  setWeightEtf,
-  setProfitEtf,
+  setWeightEtfs,
+  setProfitEtfs,
   setWeightReits,
   setProfitReits,
   setTotal,
@@ -16,6 +16,7 @@ import {
   selectData
 } from './dataSlice';
 import './Data.css'
+import { Switch } from "@material-ui/core";
 
 export default function Data() {
 
@@ -27,8 +28,10 @@ export default function Data() {
     return newValue
   }
 
-  return (
+  const assets = ['Bonds','Stocks','Etfs','Reits']
 
+  return (
+<>
   <div>
     <div>
       <table className="app">
@@ -80,24 +83,24 @@ export default function Data() {
           </td>
         </tr>
         <tr>
-          <th>ETF</th>
+          <th>ETFs</th>
           <td 
             className="input__data"
             onClick={() => { 
-              dispatch(setWeightEtf(editValue()))
+              dispatch(setWeightEtfs(editValue()))
               dispatch(setTotal())
             }}
           > 
-            {data.weightEtf}%
+            {data.weightEtfs}%
           </td>
           <td 
             className="input__data"
             onClick={() => { 
-              dispatch(setProfitEtf(editValue()))
+              dispatch(setProfitEtfs(editValue()))
               dispatch(setTotal())
               }}
           >
-            {data.profitEtf}%
+            {data.profitEtfs}%
           </td>
         </tr>
         <tr>
@@ -131,11 +134,113 @@ export default function Data() {
 
     <div className="standards-container">
       <h3>Investing standards</h3>
-      <button onClick={() => dispatch(setLowRisk())}>Low risk</button>
-      <button onClick={() => dispatch(setMediumRisk())}>Medium risk</button>
-      <button onClick={() => dispatch(setHighRisk())}>High risk</button>
+      <button onClick={() => {        
+          dispatch(setLowRisk())
+          dispatch(setTotal())
+        }}>Low risk</button>
+      <button onClick={() => {
+        dispatch(setMediumRisk())
+        dispatch(setTotal())
+      }}>Medium risk</button>
+      <button onClick={() => {
+        dispatch(setHighRisk())
+        dispatch(setTotal())
+      }}>High risk</button>
     </div>
   </div>
+
+
+
+{/*mesmo codigo de forma Programatica*/}
+
+
+
+
+
+  <div>
+    <div>
+      <table className="app">
+        <tr>
+          <th>Asset</th>
+          <th>Weight</th>
+          <th>Profit</th>
+        </tr>
+
+            {
+              assets.map((asset,i) => { 
+
+                let setProfit = ''
+                let setWeight = ''
+                let weight = ''
+                let profit = ''
+
+                switch(asset){
+                  case 'Bonds':
+                    setWeight = setWeightBonds
+                    setProfit = setProfitBonds
+                    weight = data.weightBonds
+                    profit = data.profitBonds
+                    break
+                  case 'Stocks':
+                    setWeight = setWeightStocks
+                    setProfit = setProfitStocks
+                    weight = data.weightStocks
+                    profit = data.profitStocks
+                    break
+                  case 'Etfs':
+                    setWeight = setWeightEtfs
+                    setProfit = setProfitEtfs
+                    weight = data.weightEtfs
+                    profit = data.profitEtfs
+                    break
+                  case 'Reits':
+                    setWeight = setWeightReits
+                    setProfit = setProfitReits
+                    weight = data.weightReits
+                    profit = data.profitReits
+                  break
+                }
+
+                return(
+                  <tr>
+                    <th>{asset.toUpperCase()}</th>
+                    <td 
+                      className="input__data"
+                      onClick={() => { 
+                        dispatch(setWeight(editValue()))
+                        dispatch(setTotal())
+                        }}
+                    >
+                      {
+                        weight
+                      }% 
+                    </td>
+                    <td 
+                      className="input__data"
+                      onClick={() => { 
+                        dispatch(setProfit(editValue()))
+                        dispatch(setTotal())
+                      }}
+                    >
+                      {
+                        profit
+                      }%
+                    </td>
+                    </tr>
+                )
+              })
+            }
+
+       
+        <tr>
+          <th>TOTAL</th>
+          <td>{data.total}%</td>
+          <td>{data.totalRent}%</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  </>
   );
 }
 
