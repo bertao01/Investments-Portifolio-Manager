@@ -1,3 +1,22 @@
+import React, { useState } from "react";
+import "./App.css";
+import { AiFillEdit } from "react-icons/ai";
+import Data from './features/data/Data'
+
+export default function App(props) {
+
+  return (
+
+  <div>
+    <h1>React Portifolio Manager</h1>
+    <Data/>
+  </div>
+
+  );
+}
+
+
+/*
 import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
@@ -56,3 +75,8 @@ function App() {
 }
 
 export default App;
+
+
+
+
+*/
