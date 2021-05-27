@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { AiFillEdit } from "react-icons/ai";
+import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setWeightBonds,
@@ -11,7 +10,6 @@ import {
   setWeightReits,
   setProfitReits,
   setTotal,
-  setTotalRent,
   setLowRisk,
   setMediumRisk,
   setHighRisk,
@@ -43,13 +41,19 @@ export default function Data() {
           <th>Bonds</th>
           <td 
             className="input__data"
-            onClick={() => dispatch(setWeightBonds(editValue()))}
+            onClick={() => {
+              dispatch(setWeightBonds(editValue()))
+              dispatch(setTotal())
+            }}
           >
             {data.weightBonds}%
           </td>
           <td 
             className="input__data"
-            onClick={() => dispatch(setProfitBonds(editValue()))}
+            onClick={() => {
+              dispatch(setProfitBonds(editValue()))
+              dispatch(setTotal())
+            }}
           >
             {data.profitBonds}%
           </td>
@@ -58,13 +62,19 @@ export default function Data() {
           <th>Stocks</th>
           <td 
             className="input__data"
-            onClick={() => dispatch(setWeightStocks(editValue()))}
+            onClick={() => { 
+              dispatch(setWeightStocks(editValue()))
+              dispatch(setTotal())
+            }}
           >
             {data.weightStocks}%
           </td>
           <td 
             className="input__data"
-            onClick={() => dispatch(setProfitStocks(editValue()))}
+            onClick={() => { 
+              dispatch(setProfitStocks(editValue()))
+              dispatch(setTotal())
+            }}
           >
             {data.profitStocks}%
           </td>
@@ -73,13 +83,19 @@ export default function Data() {
           <th>ETF</th>
           <td 
             className="input__data"
-            onClick={() => dispatch(setWeightEtf(editValue()))}
+            onClick={() => { 
+              dispatch(setWeightEtf(editValue()))
+              dispatch(setTotal())
+            }}
           > 
             {data.weightEtf}%
           </td>
           <td 
             className="input__data"
-            onClick={() => dispatch(setProfitEtf(editValue()))}
+            onClick={() => { 
+              dispatch(setProfitEtf(editValue()))
+              dispatch(setTotal())
+              }}
           >
             {data.profitEtf}%
           </td>
@@ -88,13 +104,19 @@ export default function Data() {
           <th>REITs</th>
           <td 
             className="input__data"
-            onClick={() => dispatch(setWeightReits(editValue()))}
+            onClick={() => { 
+              dispatch(setWeightReits(editValue()))
+              dispatch(setTotal())
+              }}
           >
             {data.weightReits}%
           </td>
           <td 
             className="input__data"
-            onClick={() => dispatch(setProfitReits(editValue()))}
+            onClick={() => { 
+              dispatch(setProfitReits(editValue()))
+              dispatch(setTotal())
+            }}
           >
             {data.profitReits}%
           </td>
@@ -120,15 +142,6 @@ export default function Data() {
 
 
 /*
-  const total =
-    data.weightStocks + data.weightEtf + data.weightReits + data.weightBonds;
-  const totalRent =
-    (data.weightStocks * data.profitStocks +
-      data.weightEtf * data.profitEtf +
-      data.weightReits * data.profitReits +
-      data.weightBonds * data.profitBonds) /
-    100;
-
 
   function handlestandard(standard) {
     switch (standard) {

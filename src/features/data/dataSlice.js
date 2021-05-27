@@ -43,23 +43,22 @@ export const dataSlice = createSlice({
         },
         setTotal : (state, action) => {
             state.total = state.weightStocks + state.weightEtf + state.weightReits + state.weightBonds;
-        },
-        setTotalRent : (state, action) => {
+
             state.totalRent = (state.weightStocks * state.profitStocks + state.weightEtf * state.profitEtf + state.weightReits * state.profitReits + state.weightBonds * state.profitBonds) / 100;
         },
-        setLowRisk : (state, action) => {
+        setLowRisk : (state) => {
             state.weightBonds = 70 
             state.weightStocks = 10
             state.weightEtf = 10
             state.weightReits = 10
         },
-        setMediumRisk : (state, action) => {
+        setMediumRisk : (state) => {
             state.weightBonds = 40 
             state.weightStocks = 20
             state.weightEtf = 20
             state.weightReits = 20
         },
-        setHighRisk : (state, action) => {
+        setHighRisk : (state) => {
             state.weightBonds = 25 
             state.weightStocks = 25
             state.weightEtf = 25
@@ -81,7 +80,6 @@ export const {
     setWeightReits,
     setProfitReits,
     setTotal,
-    setTotalRent,
     setLowRisk,
     setMediumRisk,
     setHighRisk
