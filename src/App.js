@@ -7,7 +7,6 @@ export default function App() {
   return (
 
   <div>
-    <h1>Investments Portifolio Manager</h1>
     <Data/>
   </div>
 

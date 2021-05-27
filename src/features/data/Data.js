@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
+
+// Redux slices
 import {
   setWeightBonds,
   setProfitBonds,
@@ -16,7 +18,13 @@ import {
   selectData
 } from './dataSlice';
 import './Data.css'
-import { Switch } from "@material-ui/core";
+
+//Styled Components
+import styled from 'styled-components'
+
+//Material Ui Icons
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import PieChartIcon from '@material-ui/icons/PieChart';
 
 export default function Data() {
 
@@ -24,301 +32,194 @@ export default function Data() {
   const dispatch = useDispatch();
 
   function editValue() {
-    const newValue = Number(prompt(`Set new value for this field (%):`))
+    const newValue = +prompt(`Set new value for this field (%):`)
+
+    // console.log(newValue, typeof newValue)
+
     return newValue
   }
 
   const assets = ['Bonds','Stocks','Etfs','Reits']
 
   return (
-<>
-  <div>
-    <div>
-      <table className="app">
-        <tr>
-          <th>Asset</th>
-          <th>Weight</th>
-          <th>Profit</th>
-        </tr>
-        <tr>
-          <th>Bonds</th>
-          <td 
-            className="input__data"
-            onClick={() => {
-              dispatch(setWeightBonds(editValue()))
-              dispatch(setTotal())
-            }}
-          >
-            {data.weightBonds}%
-          </td>
-          <td 
-            className="input__data"
-            onClick={() => {
-              dispatch(setProfitBonds(editValue()))
-              dispatch(setTotal())
-            }}
-          >
-            {data.profitBonds}%
-          </td>
-        </tr>
-        <tr>
-          <th>Stocks</th>
-          <td 
-            className="input__data"
-            onClick={() => { 
-              dispatch(setWeightStocks(editValue()))
-              dispatch(setTotal())
-            }}
-          >
-            {data.weightStocks}%
-          </td>
-          <td 
-            className="input__data"
-            onClick={() => { 
-              dispatch(setProfitStocks(editValue()))
-              dispatch(setTotal())
-            }}
-          >
-            {data.profitStocks}%
-          </td>
-        </tr>
-        <tr>
-          <th>ETFs</th>
-          <td 
-            className="input__data"
-            onClick={() => { 
-              dispatch(setWeightEtfs(editValue()))
-              dispatch(setTotal())
-            }}
-          > 
-            {data.weightEtfs}%
-          </td>
-          <td 
-            className="input__data"
-            onClick={() => { 
-              dispatch(setProfitEtfs(editValue()))
-              dispatch(setTotal())
-              }}
-          >
-            {data.profitEtfs}%
-          </td>
-        </tr>
-        <tr>
-          <th>REITs</th>
-          <td 
-            className="input__data"
-            onClick={() => { 
-              dispatch(setWeightReits(editValue()))
-              dispatch(setTotal())
-              }}
-          >
-            {data.weightReits}%
-          </td>
-          <td 
-            className="input__data"
-            onClick={() => { 
-              dispatch(setProfitReits(editValue()))
-              dispatch(setTotal())
-            }}
-          >
-            {data.profitReits}%
-          </td>
-        </tr>
-        <tr>
-          <th>TOTAL</th>
-          <td>{data.total}%</td>
-          <td>{data.totalRent}%</td>
-        </tr>
-      </table>
-    </div>
+  <Container>
+    <Container>
+      <Container>
+        <Title>
+          <TrendingUpIcon/>
+          Investments Manager
+          <TrendingUpIcon/>
+        </Title>
+        <Subtitle>
+          Portifolio 
+        </Subtitle>
+        <Table className="app">
+          <TableRow>
+            <TableHeader>Assets</TableHeader>
+            <TableHeader>Weight</TableHeader>
+            <TableHeader>Profit</TableHeader>
+          </TableRow>
+          
+          {/*TABLE ITERABLE CONSTRUCTION*/}
+          {
+            assets.map((asset,i) => { 
 
-    <div className="standards-container">
-      <h3>Investing standards</h3>
-      <button onClick={() => {        
+              let setProfit = ''
+              let setWeight = ''
+              let weight = ''
+              let profit = ''
+
+              switch(asset){
+                case 'Bonds':
+                  setWeight = setWeightBonds
+                  setProfit = setProfitBonds
+                  weight = data.weightBonds
+                  profit = data.profitBonds
+                  break
+                case 'Stocks':
+                  setWeight = setWeightStocks
+                  setProfit = setProfitStocks
+                  weight = data.weightStocks
+                  profit = data.profitStocks
+                  break
+                case 'Etfs':
+                  setWeight = setWeightEtfs
+                  setProfit = setProfitEtfs
+                  weight = data.weightEtfs
+                  profit = data.profitEtfs
+                  break
+                case 'Reits':
+                  setWeight = setWeightReits
+                  setProfit = setProfitReits
+                  weight = data.weightReits
+                  profit = data.profitReits
+                break
+              }
+
+              return(
+                <TableRow>
+                  <TableHeader>{asset.toUpperCase()}</TableHeader>
+                  <TableData 
+                    className="input__data"
+                    onClick={() => { 
+                      dispatch(setWeight(editValue()))
+                      dispatch(setTotal())
+                      }}
+                  >
+                    {
+                      weight
+                    }% 
+                  </TableData>
+                  <TableData 
+                    className="input__data"
+                    onClick={() => { 
+                      dispatch(setProfit(editValue()))
+                      dispatch(setTotal())
+                    }}
+                  >
+                    {
+                      profit
+                    }%
+                  </TableData>
+                  </TableRow>
+              )
+            })
+          }
+        
+          <TableRow>
+            <TableHeader>TOTAL</TableHeader>
+            <TableData>{data.total}%</TableData>
+            <TableData>{data.totalRent}%</TableData>
+          </TableRow>
+        </Table>
+      </Container>
+    </Container>
+
+    <Container className="standards-container">
+      <Subtitle>Investing standards</Subtitle>
+      <Button onClick={() => {        
           dispatch(setLowRisk())
           dispatch(setTotal())
-        }}>Low risk</button>
-      <button onClick={() => {
+        }}>Low risk</Button>
+      <Button onClick={() => {
         dispatch(setMediumRisk())
         dispatch(setTotal())
-      }}>Medium risk</button>
-      <button onClick={() => {
+      }}>Medium risk</Button>
+      <Button onClick={() => {
         dispatch(setHighRisk())
         dispatch(setTotal())
-      }}>High risk</button>
-    </div>
-  </div>
-
-
-
-{/*mesmo codigo de forma Programatica*/}
-
-
-
-
-
-  <div>
-    <div>
-      <table className="app">
-        <tr>
-          <th>Asset</th>
-          <th>Weight</th>
-          <th>Profit</th>
-        </tr>
-
-            {
-              assets.map((asset,i) => { 
-
-                let setProfit = ''
-                let setWeight = ''
-                let weight = ''
-                let profit = ''
-
-                switch(asset){
-                  case 'Bonds':
-                    setWeight = setWeightBonds
-                    setProfit = setProfitBonds
-                    weight = data.weightBonds
-                    profit = data.profitBonds
-                    break
-                  case 'Stocks':
-                    setWeight = setWeightStocks
-                    setProfit = setProfitStocks
-                    weight = data.weightStocks
-                    profit = data.profitStocks
-                    break
-                  case 'Etfs':
-                    setWeight = setWeightEtfs
-                    setProfit = setProfitEtfs
-                    weight = data.weightEtfs
-                    profit = data.profitEtfs
-                    break
-                  case 'Reits':
-                    setWeight = setWeightReits
-                    setProfit = setProfitReits
-                    weight = data.weightReits
-                    profit = data.profitReits
-                  break
-                }
-
-                return(
-                  <tr>
-                    <th>{asset.toUpperCase()}</th>
-                    <td 
-                      className="input__data"
-                      onClick={() => { 
-                        dispatch(setWeight(editValue()))
-                        dispatch(setTotal())
-                        }}
-                    >
-                      {
-                        weight
-                      }% 
-                    </td>
-                    <td 
-                      className="input__data"
-                      onClick={() => { 
-                        dispatch(setProfit(editValue()))
-                        dispatch(setTotal())
-                      }}
-                    >
-                      {
-                        profit
-                      }%
-                    </td>
-                    </tr>
-                )
-              })
-            }
-
-       
-        <tr>
-          <th>TOTAL</th>
-          <td>{data.total}%</td>
-          <td>{data.totalRent}%</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  </>
+      }}>High risk</Button>
+    </Container>
+  </Container>
   );
 }
 
+const Button = styled.button`
 
+  margin: 5px;
+  padding: 5px 0;
+  font-weight: bolder;
+  font-size: 1.5 rem;
 
-/*
-
-  function handlestandard(standard) {
-    switch (standard) {
-      case "low":
-        setData({
-          ...data,
-          weightBonds: 70,
-          weightStocks: 10,
-          weightEtf: 10,
-          weightReits: 10,
-        });
-        break;
-      case "medium":
-        setData({
-          ...data,
-          weightBonds: 50,
-          weightStocks: 30,
-          weightEtf: 10,
-          weightReits: 10,
-        });
-        break;
-      case "high":
-        setData({
-          ...data,
-          weightBonds: 30,
-          weightStocks: 30,
-          weightEtf: 20,
-          weightReits: 20,
-        });
-        break;
-      default:
-        break;
-    }
+  &:hover {
+    transform: scale(0.95);
+    cursor: pointer;
   }
 
-  function edit(asset) {
-
-    const newWeight = Number(prompt(`Set new ${asset} weight (%):`))
-    const newProfit = Number(prompt(`Set new ${asset} profit (%):`))
-    
-    switch (asset) {
-      case "bonds":
-        setData({
-          ...data,
-          weightBonds: newWeight,
-          profitBonds: newProfit,
-        })
-        break;
-      case "stocks":
-        setData({
-          ...data,
-          weightStocks: newWeight,
-          profitStocks: newProfit,
-        })
-        break;
-      case "etf":
-        setData({
-          ...data,
-          weightEtf: newWeight,
-          profitEtf: newProfit,
-        })
-        break;
-      case "reits":
-        setData({
-          ...data,
-          weightReits: newWeight,
-          profitReits: newProfit,
-        })
-        break;
-
-      default:
-        break;
-    }
+  @media (max-width: 700px) {
+      width: 50%;
   }
-*/
+
+`
+
+const Container = styled.div`
+
+@media (max-width: 700px) {
+  .standards-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+`
+
+const Table = styled.table`  
+  margin: auto;
+  border-radius: 10%;
+`
+
+const TableRow = styled.tr`
+  
+`
+
+const TableData = styled.td`
+  
+  background-color: darkgoldenrod;
+  box-shadow: black 3px 3px 3px;
+  padding: 10px;
+  border: 1px solid black;
+
+  &:hover {
+    transform: scale(0.9);
+    cursor: pointer;
+    transition: 250ms;
+}
+`
+
+const TableHeader = styled.th`
+  
+  background-color: darkgoldenrod;
+  box-shadow: black 3px 3px 3px;
+  padding: 10px;
+  border: 1px solid black;
+`
+
+const Title = styled.h1`
+  color: rgba(255, 255, 255, 0.774);
+`
+
+const Subtitle = styled.h3`
+  color: rgba(255, 255, 255, 0.774);
+`
