@@ -1,3 +1,5 @@
+// Implementar botão de delete
+
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -25,6 +27,7 @@ import styled from 'styled-components'
 //Material Ui Icons
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import PieChartIcon from '@material-ui/icons/PieChart';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function Data() {
 
@@ -121,7 +124,10 @@ export default function Data() {
                       profit
                     }%
                   </TableData>
-                  </TableRow>
+                  <DeleteIcon
+                    style={{fontSize:20, }}
+                  />
+                </TableRow>
               )
             })
           }
